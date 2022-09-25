@@ -1,0 +1,24 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+
+// Code base from: https://github.com/ethereumbook/ethereumbook
+
+// Version of Solidity compiler, we are using at least 0.8.7
+pragma solidity ^0.8.7;
+
+// Contract definition:
+contract Faucet {
+    // Constant to set Withdrawal limit
+    uint public constant WITDRAWAL_LIMIT = 100000000000000000;
+
+    // Function to accept incomming ammount function without doing anything
+    receive() external payable {}
+
+    // Function to withdraw ether to anyone who ask with limit
+    function withdraw(uint amount) public {
+        // Check withdrawal limit
+        require(amount < WITDRAWAL_LIMIT);
+
+        // Send the ammount to the requester
+        payable(msg.sender).transfer(amount);
+    }
+}
